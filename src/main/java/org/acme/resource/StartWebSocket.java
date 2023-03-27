@@ -1,4 +1,4 @@
-package org.acme;
+package org.acme.resource;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.websocket.EncodeException;
