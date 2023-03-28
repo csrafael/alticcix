@@ -25,6 +25,6 @@ public class AlticciSequenceService {
     }
 
     public boolean isLowerThanTwo(Long number){
-        return number >= 2;
+        return number <= 2;
     }
 }
