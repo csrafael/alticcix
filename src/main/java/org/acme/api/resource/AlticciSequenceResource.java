@@ -32,12 +32,12 @@ public class AlticciSequenceResource {
             value = {
                     @APIResponse(
                             responseCode = "200",
-                            description = "Exemplo retornado com sucesso",
+                            description = "Succeed example",
                             content = @Content(mediaType = MediaType.APPLICATION_JSON, schema = @Schema(implementation = BigInteger.class))
                     ),
                     @APIResponse(
                             responseCode = "400",
-                            description = "Parâmetro inválido"
+                            description = "Invalid parameter"
                     )
             }
     )

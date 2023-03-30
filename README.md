@@ -10,6 +10,9 @@ n=2 => a(2) = 1
 
 n>2 => a(n) = a(n-3) + a(n-2)
 
+Como foi implementado um cache utilizando Redis, é necessário configurar 
+o redis para executar localmente.
+
 ## Requisitos
 
 * Java 17
@@ -31,3 +34,7 @@ n>2 => a(n) = a(n-3) + a(n-2)
 ./gradlew quarkusDev
 ```
 
+## Documentação das APIs
+* [swagger](http://localhost:8080/swagger/)
+
+* [swagger-ui](http://localhost:8080/swagger-ui/)
