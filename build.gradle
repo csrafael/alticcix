@@ -14,12 +14,9 @@ dependencies {
     implementation("org.jboss.logmanager:log4j2-jboss-logmanager")
 
     implementation 'io.quarkus:quarkus-container-image-docker'
-    implementation 'io.quarkus:quarkus-hibernate-validator'
     implementation 'io.quarkus:quarkus-rest-client'
     implementation 'io.quarkus:quarkus-smallrye-openapi'
     implementation 'io.quarkus:quarkus-resteasy-reactive'
-    implementation 'org.apache.camel.quarkus:camel-quarkus-bean-validator'
-    implementation 'io.quarkus:quarkus-websockets'
     implementation 'org.apache.camel.quarkus:camel-quarkus-mock'
     implementation 'io.quarkus:quarkus-spring-web'
     implementation 'org.apache.camel.quarkus:camel-quarkus-bean'
@@ -27,8 +24,12 @@ dependencies {
     implementation 'io.quarkus:quarkus-arc'
     implementation 'io.quarkus:quarkus-rest-client-jackson'
     implementation 'io.quarkus:quarkus-resteasy-reactive-jackson'
+    implementation 'org.projectlombok:lombok:1.18.22'
     testImplementation 'io.quarkus:quarkus-junit5'
     testImplementation 'io.rest-assured:rest-assured'
+
+    testCompileOnly 'org.projectlombok:lombok:1.18.26'
+    testAnnotationProcessor 'org.projectlombok:lombok:1.18.26'
 }
 
 group 'org.acme'

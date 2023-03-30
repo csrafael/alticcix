@@ -3,30 +3,30 @@ package org.acme.domain.model;
 import io.quarkus.redis.datasource.ReactiveRedisDataSource;
 import io.quarkus.redis.datasource.RedisDataSource;
 import io.quarkus.redis.datasource.keys.ReactiveKeyCommands;
-import io.quarkus.redis.datasource.string.SetArgs;
 import io.quarkus.redis.datasource.value.ValueCommands;
 import io.smallrye.mutiny.Uni;
 
 import javax.enterprise.context.ApplicationScoped;
-import java.time.Duration;
+import javax.inject.Singleton;
+import java.math.BigInteger;
 
-@ApplicationScoped
+@Singleton
 public class Cache {
 
 
     private ReactiveKeyCommands<String> keyCommands;
-    private ValueCommands<String, Long> countCommands;
+    private ValueCommands<String, BigInteger> countCommands;
 
     public Cache(RedisDataSource ds, ReactiveRedisDataSource reactive) {
-        countCommands = ds.value(Long.class);
+        countCommands = ds.value(BigInteger.class);
         keyCommands = reactive.key();
     }
-    public Long get(String key) {
-        Long value = countCommands.get(key);
+    public BigInteger get(String key) {
+        BigInteger value = countCommands.get(key);
         return value;
     }
 
-    public void set(String key, Long value) {
+    public void set(String key, BigInteger value) {
         countCommands.set(key, value);
     }
 
@@ -35,12 +35,8 @@ public class Cache {
                 .replaceWithVoid();
     }
 
-    public boolean notInCache(Long value) {
+    public boolean notInCache(BigInteger value) {
         return value.equals(null);
-    }
-
-    public boolean inCache(Long value){
-        return !notInCache(value);
     }
 
 }

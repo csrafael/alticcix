@@ -1,14 +1,12 @@
 package org.acme.domain.service;
 
-import io.quarkus.redis.client.reactive.ReactiveRedisClient;
+import org.acme.domain.exception.ValidationException;
 import org.acme.domain.model.Cache;
-import org.acme.domain.util.GlobalConstant;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import javax.enterprise.context.ApplicationScoped;
-import javax.validation.constraints.Min;
+import java.math.BigInteger;
 
 import static org.acme.domain.util.NumberUtils.*;
 
@@ -19,34 +17,44 @@ public class AlticciSequenceService {
     @Autowired
     private Cache cache;
 
+    public BigInteger sequence(Long number) {
+        validate(number);
+        return calculateSequence(number);
+    }
+
     /**
-     * @param Long alticci index number
-     * @return Long alticci sequence value
+     * @param  number - alticci index
+     * @return BigInteger alticci sequence value
      */
-    public Long sequence(Long number) {
+    private BigInteger calculateSequence(Long number) {
         if (isZero(number)) {
-            return GlobalConstant.ZERO;
+            return BigInteger.ZERO;
         }
         if (isLowerThanTwo(number)) {
-            return GlobalConstant.ONE;
+            return BigInteger.ONE;
         }
 
-        Long result = cache.get(number.toString());
+        BigInteger result = cache.get(number.toString());
 
-        if (isNotNull(result) && result > 0) {
+        if (isNotNull(result) && result.longValue() > 0) {
             return result;
         }
 
         final Long firstTermKey = number - 3;
         final Long secondTermKey = number - 2;
+        final BigInteger firstTermValue = sequence(firstTermKey);
+        final BigInteger secondTermValue = sequence(secondTermKey);
 
-        final Long firstTermValue = sequence(firstTermKey);
-        final Long secondTermValue = sequence(secondTermKey);
-
-        result = (firstTermValue + secondTermValue);
+        result = firstTermValue.add(secondTermValue);
 
         cache.set(number.toString(),result);
 
         return result;
+    }
+
+    private void validate(Long number) {
+        if (isLowerThanZero(number)) {
+            throw new ValidationException("deve ser um valor maior ou igual a zero");
+        }
     }
 }
