@@ -35,6 +35,8 @@ o redis para executar localmente.
 ```
 
 ## Documentação das APIs
+Documentação exposta localmente.
+Portanto necessário executar a aplicação para acessar os links.
 * [swagger](http://localhost:8080/swagger/)
 
 * [swagger-ui](http://localhost:8080/swagger-ui/)

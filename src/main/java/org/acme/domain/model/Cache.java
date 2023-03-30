@@ -3,12 +3,14 @@ package org.acme.domain.model;
 import io.quarkus.redis.datasource.ReactiveRedisDataSource;
 import io.quarkus.redis.datasource.RedisDataSource;
 import io.quarkus.redis.datasource.keys.ReactiveKeyCommands;
+import io.quarkus.redis.datasource.value.SetArgs;
 import io.quarkus.redis.datasource.value.ValueCommands;
 import io.smallrye.mutiny.Uni;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Singleton;
 import java.math.BigInteger;
+import java.time.Duration;
 
 @Singleton
 public class Cache {
@@ -27,7 +29,7 @@ public class Cache {
     }
 
     public void set(String key, BigInteger value) {
-        countCommands.set(key, value);
+        countCommands.set(key, value, new SetArgs().ex(Duration.ofSeconds(60)));
     }
 
     public Uni<Void> del(String key) {
